@@ -32,7 +32,7 @@ public class ControlHexy extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_hexy);
         //Ánh xạ
-        textView = (TextView) findViewById(R.id.textView2);
+        textView = (TextView) findViewById(R.id.textView3);
         fever = (Button) findViewById(R.id.btnFever);
         foreward = (ImageView) findViewById(R.id.ivForeward);
         backward = (ImageView) findViewById(R.id.ivBackward);
@@ -198,8 +198,9 @@ public class ControlHexy extends AppCompatActivity{
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hello");
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,50);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "(^_*)'");
+        //intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,0);
+        //intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS,0);
         try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
         } catch (ActivityNotFoundException a) {
@@ -216,13 +217,11 @@ public class ControlHexy extends AppCompatActivity{
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    //write(result.toString());
-                    textView.setText(result.get(0));
                     if(result.get(0).equals("đứng dậy")){
                         write("5");
-                    }else if(result.get(0).equals("tiến lên")){
+                    }else if(result.get(0).equals("lên")){
                         write("3");
-                    }else if(result.get(0).equals("lùi lại")){
+                    }else if(result.get(0).equals("xuống")){
                         write("4");
                     }else if(result.get(0).equals("quay trái")){
                         write("1");
@@ -240,13 +239,14 @@ public class ControlHexy extends AppCompatActivity{
                         write("8");
                     }else if(result.get(0).equals("alo")){
                         write("0");
-                    }else if(result.get(0).equals("quẩy")){
-                        write("g");
                     }else if(result.get(0).equals("nằm xuống")){
                         write("k");
                     }else if(result.get(0).equals("nhảy")){
-                        write("a");
+                        write("g");
+                    }else if(result.get(0).equals("vẫy tay")){
+                        write("h");
                     }
+                    textView.setText(result.get(0));
                 }
                 break;
             }
